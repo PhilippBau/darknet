@@ -213,14 +213,16 @@ void draw_box(image a, int x1, int y1, int x2, int y2, float r, float g, float b
 
     if (file == NULL) {
         blur_strength = 0;
+        fprintf(stderr, "Error opening file.\n");
+    } else {
+        if (fscanf(file, "%d", &blur_strength) != 1) {
+            fprintf(stderr, "Error reading from file.\n");
+            blur_strength = 0;
+        }
+
+        fclose(file); // Close the file
     }
 
-    if (fscanf(file, "%d", &blur_strength) != 1) {
-        fprintf(stderr, "Error reading from file.\n");
-        fclose(file); // Close the file 
-        blur_strength = 0;
-    }
-    fclose(file);
     
     printf("===================================\n");    
     printf("This is were i am drawing the box!\n");
