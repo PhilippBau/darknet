@@ -343,6 +343,7 @@ int compare_by_probs(const void *a_ptr, const void *b_ptr) {
 
 void draw_detections_v3(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes, int ext_output)
 {
+    printf("It is possible to edit this!");
     static int frame_id = 0;
     frame_id++;
 
