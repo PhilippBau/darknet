@@ -209,7 +209,7 @@ void draw_box_width_bw(image a, int x1, int y1, int x2, int y2, int w, float bri
 void draw_box(image a, int x1, int y1, int x2, int y2, float r, float g, float b)
 {    
     int blur_strength;
-    FILE *file = fopen("../blur.txt", "r");
+    FILE *file = fopen("/content/darknet/blur.txt", "r");
 
     if (file == NULL) {
         blur_strength = 0;
