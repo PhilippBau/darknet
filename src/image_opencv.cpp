@@ -1011,19 +1011,50 @@ extern "C" void draw_detections_cv_v3(mat_cv* mat, detection *dets, int num, flo
                 //cvSetImageROI(copy_img, rect);
                 //cvSaveImage(image_name, copy_img, 0);
                 //cvResetImageROI(copy_img);
+                int blur_strength;
+                FILE *file = fopen("/content/darknet/blur.txt", "r");
+            
+                if (file == NULL) {
+                    blur_strength = 0;
+                    fprintf(stderr, "Error opening file.\n");
+                } else {
+                    if (fscanf(file, "%d", &blur_strength) != 1) {
+                        fprintf(stderr, "Error reading from file.\n");
+                        blur_strength = 0;
+                    }
+            
+                    fclose(file); // Close the file
+                }
+            
+                
+                printf("===================================\n");    
+                printf("This is were i am drawing the box!\n");
+                printf("Blur is set to %d\n", blur_strength);
+                printf("===================================\n");    
 
-                cv::rectangle(*show_img, pt1, pt2, color, width, 8, 0);
-                if (ext_output)
-                    printf("\t(left_x: %4.0f   top_y: %4.0f   width: %4.0f   height: %4.0f)\n",
-                    (float)left, (float)top, b.w*show_img->cols, b.h*show_img->rows);
-                else
-                    printf("\n");
-
-                cv::rectangle(*show_img, pt_text_bg1, pt_text_bg2, color, width, 8, 0);
-                cv::rectangle(*show_img, pt_text_bg1, pt_text_bg2, color, CV_FILLED, 8, 0);    // filled
-                cv::Scalar black_color = CV_RGB(0, 0, 0);
-                cv::putText(*show_img, labelstr, pt_text, cv::FONT_HERSHEY_COMPLEX_SMALL, font_size, black_color, 2 * font_size, CV_AA);
+                
+                
+                if (blur_strength == 0) {
+                    
+                    cv::rectangle(*show_img, pt1, pt2, color, width, 8, 0);
+                    if (ext_output)
+                        printf("\t(left_x: %4.0f   top_y: %4.0f   width: %4.0f   height: %4.0f)\n",
+                        (float)left, (float)top, b.w*show_img->cols, b.h*show_img->rows);
+                    else
+                        printf("\n");
+    
+                    cv::rectangle(*show_img, pt_text_bg1, pt_text_bg2, color, width, 8, 0);
+                    cv::rectangle(*show_img, pt_text_bg1, pt_text_bg2, color, CV_FILLED, 8, 0);    // filled
+                    cv::Scalar black_color = CV_RGB(0, 0, 0);
+                    cv::putText(*show_img, labelstr, pt_text, cv::FONT_HERSHEY_COMPLEX_SMALL, font_size, black_color, 2 * font_size, CV_AA);
                 // cv::FONT_HERSHEY_COMPLEX_SMALL, cv::FONT_HERSHEY_SIMPLEX
+                }
+                else {
+                    cv::Rect roi(pt1.x, pt1.y, pt2.x - pt1.x, pt2.y - pt1.y);
+                    cv::Mat roi_img = (*show_img)(roi);
+                    cv::GaussianBlur(roi_img, roi_img, cv::Size(blur_strength, blur_strength), 2, 2);
+                    roi_img.copyTo((*show_img)(roi));
+                }
             }
         }
         if (ext_output) {
