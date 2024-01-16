@@ -205,7 +205,10 @@ void draw_box_width_bw(image a, int x1, int y1, int x2, int y2, int w, float bri
 }
 
 void draw_box(image a, int x1, int y1, int x2, int y2, float r, float g, float b)
-{
+{    
+    printf("===================================\n");    
+    printf("This is were i am drawing the box!\n");
+    printf("===================================\n");    
     //normalize_image(a);
     int i;
     if(x1 < 0) x1 = 0;
