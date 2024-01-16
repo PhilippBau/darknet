@@ -204,7 +204,7 @@ void draw_box_width_bw(image a, int x1, int y1, int x2, int y2, int w, float bri
     }
 }
 
-#include <opencv2/opencv.hpp>
+//#include <opencv2/opencv.hpp>
 
 void draw_box(image a, int x1, int y1, int x2, int y2, float r, float g, float b)
 {    
@@ -244,11 +244,20 @@ void draw_box(image a, int x1, int y1, int x2, int y2, float r, float g, float b
         a.data[x2 + i*a.w + 2*a.w*a.h] = b;
     }
 
+for (i = x1; i <= x2; ++i) {
+        for (j = y1; j <= y2; ++j) {
+            a.data[i + j * a.w + 0 * a.w * a.h] = 0.0;  // Set red channel to 0.0 (black)
+            a.data[i + j * a.w + 1 * a.w * a.h] = 0.0;  // Set green channel to 0.0 (black)
+            a.data[i + j * a.w + 2 * a.w * a.h] = 0.0;  // Set blue channel to 0.0 (black)
+        }
+    }
+
 // Blur the content within the box
-    cv::Mat img(a.h, a.w, CV_32FC3, a.data);
-    cv::Rect roi(x1, y1, x2 - x1 + 1, y2 - y1 + 1);
-    cv::Mat roiMat = img(roi);
-    cv::GaussianBlur(roiMat, roiMat, cv::Size(blur_strength, blur_strength), 0);
+    //cv::Mat img(a.h, a.w, CV_32FC3, a.data);
+    //cv::Rect roi(x1, y1, x2 - x1 + 1, y2 - y1 + 1);
+    //cv::Mat roiMat = img(roi);
+    //cv::GaussianBlur(roiMat, roiMat, cv::Size(blur_strength, blur_strength), 0);
+
 }
 
 void draw_box_width(image a, int x1, int y1, int x2, int y2, int w, float r, float g, float b)
