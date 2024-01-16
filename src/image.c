@@ -224,7 +224,7 @@ void draw_box(image a, int x1, int y1, int x2, int y2, float r, float g, float b
     
     printf("===================================\n");    
     printf("This is were i am drawing the box!\n");
-    printf("Blur is set to %d\n", blur_strength)
+    printf("Blur is set to %d\n", blur_strength);
     printf("===================================\n");    
     //normalize_image(a);
     int i, j;
