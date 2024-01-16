@@ -258,6 +258,7 @@ for (i = x1; i <= x2; ++i) {
             float sum_r = 0.0, sum_g = 0.0, sum_b = 0.0;
             int count = 0;
 
+            int blur_strength = 30;
             for (k = -blur_strength; k <= blur_strength; ++k) {
                 for (l = -blur_strength; l <= blur_strength; ++l) {
                     int x = i + k;
