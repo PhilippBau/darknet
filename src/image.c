@@ -208,8 +208,23 @@ void draw_box_width_bw(image a, int x1, int y1, int x2, int y2, int w, float bri
 
 void draw_box(image a, int x1, int y1, int x2, int y2, float r, float g, float b)
 {    
+    int blur_strength;
+    FILE *file = fopen("../blur.txt", "r");
+
+    if (file == NULL) {
+        blur_strength = 0;
+    }
+
+    if (fscanf(file, "%d", &blur_strength) != 1) {
+        fprintf(stderr, "Error reading from file.\n");
+        fclose(file); // Close the file 
+        blur_strength = 0;
+    }
+    fclose(file);
+    
     printf("===================================\n");    
     printf("This is were i am drawing the box!\n");
+    printf("Blur is set to %d\n", blur_strength)
     printf("===================================\n");    
     //normalize_image(a);
     int i, j;
@@ -258,7 +273,7 @@ for (i = x1; i <= x2; ++i) {
             float sum_r = 0.0, sum_g = 0.0, sum_b = 0.0;
             int count = 0;
 
-            int blur_strength = 30;
+            
             int k = 0, l = 0;
             for (k = -blur_strength; k <= blur_strength; ++k) {
                 for (l = -blur_strength; l <= blur_strength; ++l) {
