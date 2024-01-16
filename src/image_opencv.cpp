@@ -1026,9 +1026,8 @@ extern "C" void draw_detections_cv_v3(mat_cv* mat, detection *dets, int num, flo
                     fclose(file); // Close the file
                 }
             
-                
+                printf("\n");
                 printf("===================================\n");    
-                printf("This is were i am drawing the box!\n");
                 printf("Blur is set to %d\n", blur_strength);
                 printf("===================================\n");    
 
@@ -1052,8 +1051,12 @@ extern "C" void draw_detections_cv_v3(mat_cv* mat, detection *dets, int num, flo
                 else {
                     cv::Rect roi(pt1.x, pt1.y, pt2.x - pt1.x, pt2.y - pt1.y);
                     cv::Mat roi_img = (*show_img)(roi);
-                    cv::GaussianBlur(roi_img, roi_img, cv::Size(blur_strength, blur_strength), 2, 2);
+                    for (int o = 0; o < blur_strength) {
+                        cv::GaussianBlur(roi_img, roi_img, cv::Size(9, 9), 2, 2);
+                    }
                     roi_img.copyTo((*show_img)(roi));
+                    cv::Scalar black_color = CV_RGB(0, 0, 0);
+                    cv::putText(*show_img, labelstr, pt_text, cv::FONT_HERSHEY_COMPLEX_SMALL, font_size, black_color, 2 * font_size, CV_AA);
                 }
             }
         }
