@@ -244,11 +244,39 @@ void draw_box(image a, int x1, int y1, int x2, int y2, float r, float g, float b
         a.data[x2 + i*a.w + 2*a.w*a.h] = b;
     }
 
+// black box 
 for (i = x1; i <= x2; ++i) {
         for (j = y1; j <= y2; ++j) {
-            a.data[i + j * a.w + 0 * a.w * a.h] = 0.0;  // Set red channel to 0.0 (black)
-            a.data[i + j * a.w + 1 * a.w * a.h] = 0.0;  // Set green channel to 0.0 (black)
-            a.data[i + j * a.w + 2 * a.w * a.h] = 0.0;  // Set blue channel to 0.0 (black)
+            //a.data[i + j * a.w + 0 * a.w * a.h] = 0.0;  // Set red channel to 0.0 (black)
+            //a.data[i + j * a.w + 1 * a.w * a.h] = 0.0;  // Set green channel to 0.0 (black)
+            //a.data[i + j * a.w + 2 * a.w * a.h] = 0.0;  // Set blue channel to 0.0 (black)
+        }
+    }
+
+    for (i = x1; i <= x2; ++i) {
+        for (j = y1; j <= y2; ++j) {
+            float sum_r = 0.0, sum_g = 0.0, sum_b = 0.0;
+            int count = 0;
+
+            for (k = -blur_strength; k <= blur_strength; ++k) {
+                for (l = -blur_strength; l <= blur_strength; ++l) {
+                    int x = i + k;
+                    int y = j + l;
+
+                    if (x >= 0 && x < a.w && y >= 0 && y < a.h) {
+                        sum_r += a.data[x + y * a.w + 0 * a.w * a.h];
+                        sum_g += a.data[x + y * a.w + 1 * a.w * a.h];
+                        sum_b += a.data[x + y * a.w + 2 * a.w * a.h];
+                        count++;
+                    }
+                }
+            }
+
+            if (count > 0) {
+                a.data[i + j * a.w + 0 * a.w * a.h] = sum_r / count;
+                a.data[i + j * a.w + 1 * a.w * a.h] = sum_g / count;
+                a.data[i + j * a.w + 2 * a.w * a.h] = sum_b / count;
+            }
         }
     }
 
