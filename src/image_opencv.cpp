@@ -1051,7 +1051,7 @@ extern "C" void draw_detections_cv_v3(mat_cv* mat, detection *dets, int num, flo
                 else {
                     cv::Rect roi(pt1.x, pt1.y, pt2.x - pt1.x, pt2.y - pt1.y);
                     cv::Mat roi_img = (*show_img)(roi);
-                    for (int o = 0; o < blur_strength, o++) {
+                    for (int o = 0; o < blur_strength; o++) {
                         cv::GaussianBlur(roi_img, roi_img, cv::Size(9, 9), 2, 2);
                     }
                     roi_img.copyTo((*show_img)(roi));
