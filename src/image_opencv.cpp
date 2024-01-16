@@ -1055,8 +1055,6 @@ extern "C" void draw_detections_cv_v3(mat_cv* mat, detection *dets, int num, flo
                         cv::GaussianBlur(roi_img, roi_img, cv::Size(9, 9), 2, 2);
                     }
                     roi_img.copyTo((*show_img)(roi));
-                    cv::Scalar black_color = CV_RGB(0, 0, 0);
-                    cv::putText(*show_img, labelstr, pt_text, cv::FONT_HERSHEY_COMPLEX_SMALL, font_size, black_color, 2 * font_size, CV_AA);
                 }
             }
         }
