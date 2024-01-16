@@ -212,7 +212,7 @@ void draw_box(image a, int x1, int y1, int x2, int y2, float r, float g, float b
     printf("This is were i am drawing the box!\n");
     printf("===================================\n");    
     //normalize_image(a);
-    int i;
+    int i, j;
     if(x1 < 0) x1 = 0;
     if(x1 >= a.w) x1 = a.w-1;
     if(x2 < 0) x2 = 0;
