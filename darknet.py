@@ -146,6 +146,11 @@ def draw_boxes(detections, image, colors):
         cv2.putText(image, "{} [{:.2f}]".format(label, float(confidence)),
                     (left, top - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
                     colors[label], 2)
+
+        region_of_interest = image[top:bottom, left:right]
+        blurred_roi = cv2.GaussianBlur(region_of_interest, (blur_strength, blur_strength), 0)
+        image[top:bottom, left:right] = blurred_roi
+
     return image
 
 
